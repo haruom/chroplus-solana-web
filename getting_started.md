@@ -1,4 +1,6 @@
 # TODO
+- 実行には.env.localが必要です。必要な場合はお声がけください。
+
 1. Dockerの起動
 2. DBの起動
    1. `docker compose up`
