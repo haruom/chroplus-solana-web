@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   }
 
   const userId = account.userId;
-
+  console.log('userId', userId)
   const [year, month_, date] = dateStr.split('-').map(x => parseInt(x))
   const month = month_ - 1
   const targetDate = new Date(Date.UTC(year, month, date));

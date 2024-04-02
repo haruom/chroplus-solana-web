@@ -4,14 +4,17 @@ import { getUserId } from "../next-auth/auth";
 export async function getRewardState(userId?: string) {
   if (!userId) {
     userId = await getUserId()
+    console.log('userId', userId)
   }
   // const userId = 'clsqew4kb0016luu6k8jtwwld';
   const prisma = new PrismaClient();
   const records_ = await prisma.record.findMany({
     where: { userId }
   })
+  console.log('records_', records_)
   await prisma.$disconnect()
   const records = records_.map(({ userId, id, ...rest }) => rest) // 不要な情報を取り除く
+  console.log('records', records)
 
   const balance_ = records.reduce((acc, { amount }) => acc + amount, BigInt(0))
   const balance = bigint2Float(balance_)
