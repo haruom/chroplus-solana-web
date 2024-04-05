@@ -16,6 +16,34 @@ import { redirect } from "next/navigation";
  */
 export default function Home() {
 
+  const saveData = async () => {
+    const data = {
+      accountId: 'f84b07dd917bf62312b813cfb-b26ac0334d',
+      dateStr: '2024-04-01'
+    };
+    const url = new URL('/api/books', window.location.origin);
+  
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+  
+    const text = await response.text();
+    return text;
+  };
+  
+  
+  const handleSaveClick = () => {
+    saveData().then(response => {
+      console.log("Data saved:", response);
+    }).catch(error => {
+      console.error("Saving data failed:", error);
+    });
+  };
+  
   return (<>
     <header className="bg-black">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -95,6 +123,8 @@ export default function Home() {
             Demo for lab.
           </p>
         </button> */}
+
+        <button onClick={handleSaveClick}>Save Data</button>
 
         <button
           onClick={() => { signIn('oura', { callbackUrl: "/status_solana" }); }}

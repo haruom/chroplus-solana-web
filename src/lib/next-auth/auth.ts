@@ -48,7 +48,7 @@ export const { handlers, auth } = NextAuth({
 export async function getUserId() {
   const session = await auth();
   if (!session?.user?.id) {
-    throw 'no_session';
+    throw 'no session';
   }
 
   return session.user.id
