@@ -4,21 +4,43 @@ import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 
-export default function Page() {
+const Page = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [amount, setAmount] = useState('');
+    const [clickedCopy, setClickedCopy] = useState(false);
+    const [csvUrl, setCsvUrl] = useState('');
     const address = "0x123456789";
 
 
     const clickCopyHandler = async () => {
         try {
             await navigator.clipboard.writeText(address);
-            alert('クリップボードに保存しました。');
+            alert('save to clipboard');
+            setClickedCopy(true);
         } catch (error) {
-            alert('コピーに失敗しました');
+            alert('failed to save to clipboard');
         }
     };
+  
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const response = await fetch('/api/csv'); // Make sure this points to your actual API endpoint
+          if (!response.ok) {
+            throw new Error('Data fetching failed');
+          }
+          const jsonData = await response.json();
+          console.log(jsonData.csvUrl);
+          setCsvUrl(jsonData.csvUrl);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+      fetchData();
+    }, []);
+
+    
 
     return (
         <>
@@ -71,16 +93,22 @@ export default function Page() {
           <hr/>
           {/* a href の中に松嶋さんからもらった データの CSV のリンクを入れてしまうにしましょう！*/}
           {/* フォールバックプランとして、上のcopy が完了したら下のSectionを表示するロジックをいれてもらえると！*/}
-          <section className="m-10">
-            <div className="flex justify-between items-center">
-              <h3 className=" m-3 font-bold">Data Download</h3>
-              <div className="flex m-3 items-center">
-                  <span className="mx-8"> ID = K6tTYUkcJHwPQUDu </span>
-                  <a href="" className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded'>Download</a>
-              </div>
-            </div>
-          </section>
+          {clickedCopy && (
+                <section className="m-10">
+                    <div className="flex justify-between items-center">
+                        <h3 className=" m-3 font-bold">Data Download</h3>
+                        <div className="flex m-3 items-center">
+                            <span className="mx-8">ID = K6tTYUkcJHwPQUDu</span>
+                            {/* Update the href with your actual download link */}
+                            <a href={csvUrl} className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded'>Download</a>
+                        </div>
+                    </div>
+                </section>
+            )}
         </div>
         </>
     );
 }
+
+
+export default Page;
