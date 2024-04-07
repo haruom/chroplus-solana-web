@@ -68,7 +68,7 @@ export default function Page() {
         {aleart && <p className="text-red-500">{aleart}</p>}
       </div>
       <div className="flex justify-center m-3">
-        <button onClick={handleSearchClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button>
+        <button onClick={handleSearchClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
       </div>
 
       {showResult && (

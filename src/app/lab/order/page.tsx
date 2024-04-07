@@ -35,7 +35,7 @@ export default function Page() {
             <span className="mx-3">{endDate}</span>
         </div>
         <p className="text-center m-3">Amount of remittance</p>
-        <p className="text-center m-3">{amount}MATIC</p>
+        <p className="text-center m-3">{amount}SOL</p>
         </>
     );
     }
