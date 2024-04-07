@@ -40,6 +40,8 @@ const Page = () => {
       fetchData();
     }, []);
 
+    
+
     return (
         <>
         <header className="bg-black relative lg:w-full">
