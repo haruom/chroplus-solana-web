@@ -70,7 +70,7 @@ export default function Page() {
         </nav>
       </header>
       <h1 className="text-3xl text-center m-5">Search</h1>
-      <p className="text-center m-3">Sleep data acquisition date</p>
+      <p className="text-center m-3">"XHRO" data acquisition date</p>
       <div className="flex justify-center m-3">
         <input type="date" className="w-3/7 mx-auto" value={startDate} onChange={e => setStartDate(e.target.value)}/>
         <span className="mx-1">〜</span>
