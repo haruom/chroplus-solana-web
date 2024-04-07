@@ -1,7 +1,4 @@
-import { logoutAndGoHome } from "@/lib/next-auth/auth";
-import Token, { } from "./token";
 import Image from "next/image"
-import { bigint2Float, getRewardState } from "@/lib/reward/reward";
 
 
 
