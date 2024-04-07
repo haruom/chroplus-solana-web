@@ -1,4 +1,6 @@
 "use client";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
 
@@ -40,7 +42,7 @@ export default function Page() {
         <div className="m-30 mx-auto max-w-3xl">
           <section className="m-10">
             <div className="flex justify-between">
-              <h3 className="m-3 font-bold">Data period</h3>
+              <h3 className="m-3 font-bold">Data Period</h3>
               <div className="flex m-3">
                   <span className="mx-3">{startDate}</span>
                   <span className="mx-3">〜</span>
@@ -48,7 +50,7 @@ export default function Page() {
               </div>
             </div>
             <div className="flex justify-between">
-              <h3 className="m-3 font-bold ">Amount of remittance</h3>
+              <h3 className="m-3 font-bold ">Amount of Remittance</h3>
               <div className="flex m-3">
                 <span className="mx-3">{amount}</span>
                 <span className="mx-3">SOL</span>
@@ -58,7 +60,7 @@ export default function Page() {
           <hr/>
           <section className="m-10">
             <div className="flex justify-between items-center">
-              <h3 className=" m-3 font-bold">Remittance address</h3>
+              <h3 className=" m-3 font-bold">Remittance Address</h3>
               <div className="flex m-3 items-center">
                   <span className="mx-8">{address}</span>
                   <button className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded' onClick={() => clickCopyHandler()}>copy</button>
