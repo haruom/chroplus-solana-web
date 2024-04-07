@@ -38,4 +38,4 @@ export default function Page() {
         <p className="text-center m-3">{amount}SOL</p>
         </>
     );
-    }
+}
