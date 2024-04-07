@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 interface RewardData {
     id: string;
-    createdAt: Date; // Or string if you've converted it before sending
+    createdAt: Date; 
     price: number;
     seconds: number;
     uid: string;
