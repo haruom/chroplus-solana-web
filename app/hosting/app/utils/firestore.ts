@@ -1,7 +1,7 @@
 // utils/firebaseAdmin.js
 
 import admin from 'firebase-admin';
-import serviceAccount from '../../../chro-plus-firebase-adminsdk.json'; // Update the path as needed
+import serviceAccount from '../../chro-plus-firebase-adminsdk.json'; // Update the path as needed
 
 if (!admin.apps.length) {
     admin.initializeApp({

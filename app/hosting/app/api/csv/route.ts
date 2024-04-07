@@ -21,5 +21,4 @@ export async function GET(request:Request) {
 
 function mkResponse(body: any, option?: any) {
     return new NextResponse(JSON.stringify(body), option)
-  }
-  
+}
