@@ -1,18 +1,55 @@
+'use client'
+import React, { useEffect, useState } from 'react';
 import Image from "next/image"
 
+interface RewardData {
+  id: string;
+  createdAt: Date; 
+  price: number;
+  seconds: number;
+  uid: string;
+}
 
-export default async function Page() {
-    // const { records, balance } = await getRewardState();
-    // const earnSum_ = records
-    //   .filter(x => x.type === 'SLEEP')
-    //   .map(x => x.amount)
-    //   .reduce((a, b) => a + b, BigInt(0))
-    // const withdrawSum_ = records
-    //   .filter(x => x.type === 'WITHDRAW')
-    //   .map(x => x.amount)
-    //   .reduce((a, b) => a + b, BigInt(0))
-    // const earnSum = bigint2Float(earnSum_)
-    // const withdrawSum = bigint2Float(withdrawSum_)
+const defaultDataDetails = [
+  { name: 'EEG', size: '1MB' },
+  { name: 'ECG', size: '1MB' },
+  { name: 'Heart Rate', size: '1MB' },
+  { name: 'Body temperature', size: '1MB' },
+];
+
+const Page = () => {
+  const [data, setData] = useState<RewardData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [totalBalance, setTotalBalance] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/data'); // Make sure this points to your actual API endpoint
+        if (!response.ok) {
+          throw new Error('Data fetching failed');
+        }
+        const jsonData = await response.json();
+        setData(jsonData); // Update your state with the fetched data
+        
+        // Calculate the total using jsonData directly
+        const total = jsonData.reduce((sum: number, record: RewardData) => sum + parseFloat(record.price.toString()), 0);
+        setTotalBalance(total);
+        console.log(total);
+      } catch (error) {
+        // Assuming you're using TypeScript and error handling is properly set up
+        setError(error instanceof Error ? error.message : String(error));
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+    
+  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
     return (<>
       <header className="bg-black relative lg:w-full">
@@ -39,120 +76,44 @@ export default async function Page() {
         <h3 className="mt-10 m-5 font-bold">"XHRO" Measurement data </h3>
         <hr/>
         <div className="C-data-list">
-          <div className="flex justify-between font-bold m-5">
-            <span className="basis-3/12">Date</span>
-            <span className="basis-7/12 flex justify-between">
-              <span className="basis-4/6">Data Info</span>
-              <span className="basis-2/6">Amount</span>
-            </span>
-            <span className="basis-2/12 text-right">Reward</span>
-          </div>
-
-
-          <hr/>
-          <div className="flex justify-between m-5">
-            <span className="basis-3/12">2024-04-01</span>
-            <span className="basis-7/12 flex justify-between">
-              <details className="w-full">
-                <summary className="flex justify-between">
-                  <span className="basis-4/6">▼ {`4`} types of data</span>
-                  <span className="basis-2/6">{`20h23m`}</span>
-                </summary>
-                <span className="flex justify-between mt-3">
-                  <span className="basis-4/6">- EEG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
+          {data.map((record, index) => (
+            <React.Fragment key={index}>
+              <div className="flex justify-between m-5">
+                <span className="basis-3/12">{new Date(record.createdAt).toLocaleDateString("ja-JP")}</span>
+                <span className="basis-7/12 flex justify-between">
+                  <details className="w-full">
+                    <summary className="flex justify-between">
+                      <span className="basis-4/6">▼ {defaultDataDetails.length} types of data</span>
+                      <span className="basis-2/6">{
+                      `${Math.floor(record.seconds / 3600)}h ${Math.floor((record.seconds % 3600) / 60)}m`}
+                      </span>
+                    </summary>
+                    {defaultDataDetails.map((detail, detailIndex) => (
+                      <span key={detailIndex} className="flex justify-between mt-3">
+                        <span className="basis-4/6">- {detail.name}</span>
+                        <span className="basis-2/6">{detail.size}</span>
+                      </span>
+                    ))}
+                  </details>
                 </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- ECG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Heart Rate</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Body temperature</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-              </details>
-            </span>
-            <span className="basis-2/12 text-right">{`0.001`} SOL</span>
-          </div>
-
-
-          <hr/>
-          <div className="flex justify-between m-5">
-            <span className="basis-3/12">2024-04-01</span>
-            <span className="basis-7/12 flex justify-between">
-              <details className="w-full">
-                <summary className="flex justify-between">
-                  <span className="basis-4/6">▼ {`4`} types of data</span>
-                  <span className="basis-2/6">{`20h23m`}</span>
-                </summary>
-                <span className="flex justify-between mt-3">
-                  <span className="basis-4/6">- EEG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- ECG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Heart Rate</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Body temperature</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-              </details>
-            </span>
-            <span className="basis-2/12 text-right">{`0.001`} SOL</span>
-          </div>
-
-
-          <hr/>
-          <div className="flex justify-between m-5">
-            <span className="basis-3/12">2024-04-01</span>
-            <span className="basis-7/12 flex justify-between">
-              <details className="w-full">
-                <summary className="flex justify-between">
-                  <span className="basis-4/6">▼ {`4`} types of data</span>
-                  <span className="basis-2/6">{`20h23m`}</span>
-                </summary>
-                <span className="flex justify-between mt-3">
-                  <span className="basis-4/6">- EEG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- ECG</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Heart Rate</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-                <span className="flex justify-between">
-                  <span className="basis-4/6">- Body temperature</span>
-                  <span className="basis-2/6">{`1MB`}</span>
-                </span>
-              </details>
-            </span>
-            <span className="basis-2/12 text-right">{`0.001`} SOL</span>
-          </div>
-
-
+                <span className="basis-2/12 text-right">{record.price.toFixed(5)}SOL</span>
+              </div>
+              <hr />
+            </React.Fragment>
+          ))}
         </div>
-
         <hr/>
       </section>
       <section className="CONTENTS_WRAP mt-20 mx-auto max-w-3xl pb-20">
         <div className="flex justify-between font-bold p-5 bg-slate-400">
           <h3 className="font-bold">Total Rewards Earned</h3>
-          <div className="text-center">{`Balance: 10 SOL`}</div>
+          <div className="text-center">{`Balance: ${totalBalance.toFixed(8)} SOL`}</div>
             {/* <Token records={records} earnSum={earnSum} withdrawSum={withdrawSum} /> */}
         </div>
       </section>
 
     </>);
 }
+
+
+export default Page;
