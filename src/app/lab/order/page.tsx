@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation'
+import Image from "next/image";
 
 export default function Page() {
     const [startDate, setStartDate] = useState('');
@@ -20,23 +22,65 @@ export default function Page() {
 
     return (
         <>
-            <a href="../" className="m-5">
-                <img src="/Sleepin.svg" alt="sleepin" width={100} height={100} />
-            </a>
-            <h1 className="text-3xl text-center m-5">Order</h1>
-            <p className="text-center m-3">振込先アドレス</p>
-            <div className="flex justify-center items-center m-3">
-                <span className="w-1/3 text-center">{address}</span>
-                <button className='btn m-5 border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded' onClick={clickCopyHandler}>コピー</button>
+        <header className="bg-black relative lg:w-full">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <div className="flex">
+              <a href="/" className="">
+                <Image
+                  className="relative dark:invert"
+                  src="/chro-plus_logo_wht.svg"
+                  alt="chro-plus Logo"
+                  width={90}
+                  height={22}
+                  priority
+                />
+              </a>
             </div>
-            <p className="text-center m-3">データ期間</p>
-            <div className="flex justify-center m-3">
-                <span className="mx-3">{startDate}</span>
-                <span className="mx-3">〜</span>
-                <span className="mx-3">{endDate}</span>
+            <div className="flex text-white">Lab.</div>
+          </nav>
+        </header>
+        <h1 className="text-3xl text-center m-20 font-bold">Order</h1>
+        <div className="m-30 mx-auto max-w-3xl">
+          <section className="m-10">
+            <div className="flex justify-between">
+              <h3 className="m-3 font-bold">Data Period</h3>
+              <div className="flex m-3">
+                  <span className="mx-3">{startDate}</span>
+                  <span className="mx-3">〜</span>
+                  <span className="mx-3">{endDate}</span>
+              </div>
             </div>
-            <p className="text-center m-3">送金額</p>
-            <p className="text-center m-3">{amount}SOL</p>
+            <div className="flex justify-between">
+              <h3 className="m-3 font-bold ">Amount of Remittance</h3>
+              <div className="flex m-3">
+                <span className="mx-3">{amount}</span>
+                <span className="mx-3">SOL</span>
+              </div>
+            </div>
+          </section>
+          <hr/>
+          <section className="m-10">
+            <div className="flex justify-between items-center">
+              <h3 className=" m-3 font-bold">Remittance Address</h3>
+              <div className="flex m-3 items-center">
+                  <span className="mx-8">{address}</span>
+                  <button className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded' onClick={() => clickCopyHandler()}>copy</button>
+              </div>
+            </div>
+          </section>
+          <hr/>
+          {/* a href の中に松嶋さんからもらった データの CSV のリンクを入れてしまうにしましょう！*/}
+          {/* フォールバックプランとして、上のcopy が完了したら下のSectionを表示するロジックをいれてもらえると！*/}
+          <section className="m-10">
+            <div className="flex justify-between items-center">
+              <h3 className=" m-3 font-bold">Data Download</h3>
+              <div className="flex m-3 items-center">
+                  <span className="mx-8"> ID = K6tTYUkcJHwPQUDu </span>
+                  <a href="" className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded'>Download</a>
+              </div>
+            </div>
+          </section>
+        </div>
         </>
     );
 }

@@ -49,16 +49,28 @@ export default function Page() {
       const calculatedAmount = calculatedDays * 1000;
       setAmount(calculatedAmount);
     };
-  
-
 
   return (
     <>
-      <a href="../" className="m-5">
-        <img src="/Sleepin.svg" alt="sleepin" width={100} height={100} />
-      </a>
+      <header className="bg-black relative lg:w-full">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <div className="flex">
+            <a href="/" className="">
+              <Image
+                className="relative dark:invert"
+                src="/chro-plus_logo_wht.svg"
+                alt="chro-plus Logo"
+                width={90}
+                height={22}
+                priority
+              />
+            </a>
+          </div>
+          <div className="flex text-white">Lab.</div>
+        </nav>
+      </header>
       <h1 className="text-3xl text-center m-5">Search</h1>
-      <p className="text-center m-3">Sleep data acquisition date</p>
+      <p className="text-center m-3">"XHRO" data acquisition date</p>
       <div className="flex justify-center m-3">
         <input type="date" className="w-3/7 mx-auto" value={startDate} onChange={e => setStartDate(e.target.value)}/>
         <span className="mx-1">〜</span>
