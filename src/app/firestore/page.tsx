@@ -1,9 +1,18 @@
-// Mark the component as a Client Component
 "use client";
+import { Timestamp } from 'firebase-admin/firestore';
 import React, { useEffect, useState } from 'react';
 
+
+interface RewardData {
+    id: string;
+    createdAt: Date; // Or string if you've converted it before sending
+    price: number;
+    seconds: number;
+    uid: string;
+  }
+
 function DataFetcher() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<RewardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -18,14 +27,10 @@ function DataFetcher() {
           throw new Error(`Data fetching failed with status: ${response.status}`);
         }
         const jsonData = await response.json();
+        setData(jsonData); // Expect jsonData to be an array
         console.log(jsonData);
-        setData(jsonData);
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unexpected error occurred');
-        }
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
       } finally {
         setLoading(false);
       }
@@ -36,13 +41,27 @@ function DataFetcher() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (!data) return <div>No data available</div>; // Handle case when there is no data
 
   return (
-    <div>
-      <h1>Fetched Data</h1>
-      <ul>
-      </ul>
-    </div>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Data</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+    <tbody>
+        {data.map((record, index) => (
+            <tr key={index}>
+                <td>{record.createdAt.toString()}</td> 
+                <td>{record.seconds} seconds</td>
+                <td>{record.price.toFixed(8)} SOL</td>
+            </tr>
+        ))}
+    </tbody>
+    </table>
   );
 }
 

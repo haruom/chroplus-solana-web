@@ -4,8 +4,22 @@ import admin from '../../utils/firestore';
 export async function GET(request:Request) {
     const db = admin.firestore();
     try {
-        const snapshot = await db.collection('rewards').get();
-        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const data: any= [];
+        const snapshot = await admin.firestore().collection('rewards').get();
+        snapshot.forEach((doc) => {
+            const docData = doc.data();
+            const createdAt = docData.createdAt?._seconds
+              ? new Date(docData.createdAt._seconds * 1000).toLocaleDateString("ja-JP")
+              : "Unknown Date";
+            data.push({
+              id: doc.id,
+              createdAt,
+              price: docData.price,
+              seconds: docData.seconds,
+              uid: docData.uid,
+            });
+          });
+          
         return mkResponse(data,{status:200});
     } catch (error) {
         console.error('Error fetching data:', error);
