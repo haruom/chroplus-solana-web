@@ -6,8 +6,8 @@ import { NextAuthProvider } from "@/lib/next-auth/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Qbrane",
-  description: "Sleep2Earn",
+  title: "[DEMO] CHRO+ | Qbrane",
+  description: "Building the World's Largest Real-World Health Database with DePIN For Longevity Research",
 };
 
 export default function RootLayout({

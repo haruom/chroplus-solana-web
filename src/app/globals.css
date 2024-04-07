@@ -12,12 +12,7 @@
 body {
   height: 100vh;
   color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-start-rgb)); 
-  background-image: linear-gradient(
-      to bottom,
-      rgb(var(--background-start-rgb)),
-      rgb(var(--background-end-rgb))
-    );
+  background-color: rgb(var(--background-start-rgb));
   background-repeat: no-repeat;
 }
 
