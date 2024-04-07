@@ -21,3 +21,38 @@ body {
     text-wrap: balance;
   }
 }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background-color: #f0f0f0;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Styling for the collapsible details */
+.details {
+  cursor: pointer;
+}
+
+.details-summary {
+  list-style: none;
+}
+
+.details-content {
+  margin-left: 20px;
+}
+
+.details-content-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
