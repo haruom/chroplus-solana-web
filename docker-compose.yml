@@ -1,16 +1,3 @@
 services:
- db:
-   image: postgres
-   environment:
-     - TZ=Asia/Tokyo
-     - POSTGRES_DB=qbrane
-     - POSTGRES_USER=user
-     - POSTGRES_PASSWORD=password
-     - PGDATA=/var/lib/postgresql/data/pgdata
-   ports:
-     - 5432:5432
-   volumes:
-     - db_data:/var/lib/postgresql
-     - ./db_dump:/tmp/db_dump
 volumes:
   db_data: {}

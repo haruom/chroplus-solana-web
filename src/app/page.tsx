@@ -5,14 +5,6 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-/*
- * ここをランディングページとする？
- * - サービスの説明
- * - 「利用する」ボタン
- *   - ヘッダにある
- *   - Ouraリングの認証要求ページに飛ぶ
- *   - 認証済みの場合、「マイページ」ボタンに変わる
- */
 export default function Home() {
   
   return (<>
@@ -60,37 +52,6 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        {/* <button
-          onClick={() => { signIn('oura'); }}
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Demo{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Demo for user.
-          </p>
-        </button> */}
-
-        {/* <button
-          onClick={() => { signIn('oura', { callbackUrl: "/lab/search" }); }}
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Demo{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Demo for lab.
-          </p>
-        </button> */}
         <Link href="/firestore_page" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           rel="noopener noreferrer"
@@ -120,22 +81,6 @@ export default function Home() {
             login as user.
           </p>
         </Link>
-        {/* <button
-          onClick={() => { signIn('oura', { callbackUrl: "/status_solana" }); }}
-          //onClick={() => { redirect('/status'); }}
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            login{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            login as user.
-          </p>
-        </button> */}
 
         <Link href="/lab/search" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
