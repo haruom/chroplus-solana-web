@@ -46,9 +46,10 @@ const Page = () => {
           // ECG: 0.25MB/min
           // PPG: 0.10MB/min
           // Body Temperature: 0.0005MB/min
-          // totalSOL += (0.25 + 0.25 + 0.10 + 0.0005) * jsonData[i].sectonds / 60
-          totalSOL += 0.60005 * jsonData[i].seconds / 60
-          dataAmoutArray.push(totalSOL)
+          // totalSOL += (0.25 + 0.25 + 0.10 + 0.0005) * jsonData[i].sectonds / 60\
+          const amount = 0.60005 * jsonData[i].seconds / 60 /1024
+          totalSOL += amount
+          dataAmoutArray.push(amount)
           const dataDetail = [
             { name: 'EEG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
             { name: 'ECG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
