@@ -90,20 +90,37 @@ const Page = () => {
         </nav>
       </header>
      <section className="CONTENTS_WRAP m-30 mx-auto max-w-3xl">
+     <h1 className="text-3xl text-center m-20 font-bold">Collections</h1>
         <h3 className="mt-10 m-5 font-bold">Your NFT Collections to download XHRO Data</h3>
         <hr/>
         <div className="C-data-list">
           {nfts.map((nft, index) => (
             <React.Fragment key={index}>
               <div className="flex justify-between m-5">
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-5/6">{nft.name}</span>
-                      <button className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded' onClick={() => downloadCSV(nft.uri)}>Download</button>
-                    </summary>
-                  </details>
-                </span>
+                  <div className="w-full">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center basis-4/12">
+                        <div>
+                          <Image
+                              className="relative"
+                              src="/ic_97897ha7f34.png"
+                              alt="ic_97897ha7f34"
+                              width={36}
+                              height={36}
+                              priority
+                            />
+                          </div>
+                        <div className="pl-4">
+                          <div><a href="" target="_blank" rel="no-openner" className="underline decoration-solid">{`0x298f8a73t5f...`}</a></div>
+                          <div className="text-xs">{`YYYY.MM.DD 00:00:00`}</div>
+                        </div>
+                      </div>
+                      <div className="text-left basis-6/12">
+                        <span className="">{nft.name}</span>
+                      </div>
+                      <button className='basis-2/12 btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded' onClick={() => downloadCSV(nft.uri)}>Download</button>
+                    </div>
+                  </div>
               </div>
               <hr />
             </React.Fragment>
