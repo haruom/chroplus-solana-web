@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { publicKey } from '@metaplex-foundation/umi';
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
 import { fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
+import Image from "next/image";
 
 const ENDPOINT = 'https://api.devnet.solana.com';
 
@@ -71,6 +72,23 @@ const Page = () => {
   }, []);
 
   return <>
+      <header className="bg-black relative lg:w-full">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <div className="flex">
+            <a href="/" className="">
+              <Image
+                className="relative dark:invert"
+                src="/chro-plus_logo_wht.svg"
+                alt="chro-plus Logo"
+                width={90}
+                height={22}
+                priority
+              />
+            </a>
+          </div>
+          <div className="flex text-white">Lab.</div>
+        </nav>
+      </header>
      <section className="CONTENTS_WRAP m-30 mx-auto max-w-3xl">
         <h3 className="mt-10 m-5 font-bold">Your NFT Collections to download XHRO Data</h3>
         <hr/>

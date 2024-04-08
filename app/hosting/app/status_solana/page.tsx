@@ -1,20 +1,21 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 
 interface RewardData {
   id: string;
-  createdAt: Date; 
+  createdAt: Date;
   price: number;
   seconds: number;
   uid: string;
 }
 
 const defaultDataDetails = [
-  { name: 'EEG', size: '1MB' },
-  { name: 'ECG', size: '1MB' },
-  { name: 'Heart Rate', size: '1MB' },
-  { name: 'Body temperature', size: '1MB' },
+  { name: 'EEG', size: '330MB' },
+  { name: 'ECG', size: '330MB' },
+  { name: 'PPG', size: '132MB' },
+  { name: 'Body temperature', size: '0.66MB' },
 ];
 
 const Page = () => {
@@ -32,7 +33,7 @@ const Page = () => {
         }
         const jsonData = await response.json();
         setData(jsonData); // Update your state with the fetched data
-        
+
         // Calculate the total using jsonData directly
         const total = jsonData.reduce((sum: number, record: RewardData) => sum + parseFloat(record.price.toString()), 0);
         setTotalBalance(total);
@@ -44,9 +45,9 @@ const Page = () => {
         setLoading(false);
       }
     }
-    
+
     fetchData();
-    
+
   }, []);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
