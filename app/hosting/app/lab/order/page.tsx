@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation'
 import Image from "next/image";
+import Link from "next/link";
 
 const Page = () => {
     const [startDate, setStartDate] = useState('');
@@ -22,25 +23,6 @@ const Page = () => {
             alert('failed to save to clipboard');
         }
     };
-  
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const response = await fetch('/api/csv'); // Make sure this points to your actual API endpoint
-          if (!response.ok) {
-            throw new Error('Data fetching failed');
-          }
-          const jsonData = await response.json();
-          console.log(jsonData.csvUrl);
-          setCsvUrl(jsonData.csvUrl);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-      fetchData();
-    }, []);
-
-    
 
     return (
         <>
@@ -91,19 +73,12 @@ const Page = () => {
             </div>
           </section>
           <hr/>
-          {/* a href の中に松嶋さんからもらった データの CSV のリンクを入れてしまうにしましょう！*/}
-          {/* フォールバックプランとして、上のcopy が完了したら下のSectionを表示するロジックをいれてもらえると！*/}
-          {clickedCopy && (
-                <section className="m-10">
-                    <div className="flex justify-between items-center">
-                        <h3 className=" m-3 font-bold">Data Download</h3>
-                        <div className="flex m-3 items-center">
-                            <span className="mx-8">ID = K6tTYUkcJHwPQUDu</span>
-                            {/* Update the href with your actual download link */}
-                            <a href={csvUrl} className='btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded'>Download</a>
-                        </div>
-                    </div>
-                </section>
+            {clickedCopy && (
+              <div className="flex justify-center m-3">
+                <Link  href={{pathname: '/lab/download'}} >
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Your NFT Collections</button>
+                </Link>
+              </div>
             )}
         </div>
         </>
