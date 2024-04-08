@@ -36,8 +36,29 @@ const Page = () => {
         if (!response.ok) {
           throw new Error('Data fetching failed');
         }
-        const jsonData = await response.json();
-        setData(jsonData); // Update your state with the fetched data
+        var jsonData = await response.json();
+        const uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
+          // Create a unique key for each combination of 'seconds' and 'createdAt'
+          const uniqueKey = `${value.seconds}-${value.createdAt}`;
+          // Check if the current index is the first occurrence of this unique key
+          return self.findIndex((item: RewardData) => `${item.seconds}-${item.createdAt}` === uniqueKey) === index;
+        });
+
+        // Now, sort by 'createdAt' in descending order
+        uniqueData.sort((a: RewardData, b: RewardData) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB.getTime() - dateA.getTime();
+        });
+
+        // Update jsonData or set your state with the filtered and sorted data
+        jsonData = uniqueData;
+
+
+
+        setData(jsonData); 
+
+
         var totalSOL = 0
         var dataAmoutArray = []
         var dataDetails = [[{ name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}]]
