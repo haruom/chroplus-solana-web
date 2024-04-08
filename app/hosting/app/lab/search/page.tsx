@@ -87,7 +87,7 @@ export default function Page() {
           <fieldset>
 
             <hr/>
-            <label for="{`ITEM-ID`}">
+            <label htmlFor="{`ITEM-ID`}">
               <div className="flex justify-between m-5">
                 <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
                 <span className="basis-3/12 pl-3">2024-04-01</span>
@@ -121,7 +121,7 @@ export default function Page() {
 
 
             <hr/>
-            <label for="{`ITEM-ID`}">
+            <label htmlFor="{`ITEM-ID`}">
               <div className="flex justify-between m-5">
                 <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
                 <span className="basis-3/12 pl-3">2024-04-01</span>
@@ -155,7 +155,7 @@ export default function Page() {
 
 
             <hr/>
-            <label for="{`ITEM-ID`}">
+            <label htmlFor="{`ITEM-ID`}">
               <div className="flex justify-between m-5">
                 <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
                 <span className="basis-3/12 pl-3">2024-04-01</span>
