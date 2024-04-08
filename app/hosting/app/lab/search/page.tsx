@@ -111,8 +111,11 @@ export default function Page() {
           </div>
         </>
       )}
-
-
+      <div className="flex justify-center m-3">
+        <Link  href={{pathname: '/lab/download'}} >
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Your NFT Collections</button>
+        </Link>
+      </div>
     </>
   );
 }
