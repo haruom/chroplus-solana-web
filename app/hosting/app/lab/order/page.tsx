@@ -47,11 +47,9 @@ const Page = () => {
         <div className="m-30 mx-auto max-w-3xl">
           <section className="m-10">
             <div className="flex justify-between">
-              <h3 className="m-3 font-bold">Data Period</h3>
+              <h3 className="m-3 font-bold">Quantity</h3>
               <div className="flex m-3">
-                  <span className="mx-3">{startDate}</span>
-                  <span className="mx-3">〜</span>
-                  <span className="mx-3">{endDate}</span>
+                  <span className="mx-3">{`3`}</span>
               </div>
             </div>
             <div className="flex justify-between">
