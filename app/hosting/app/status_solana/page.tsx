@@ -20,9 +20,14 @@ const defaultDataDetails = [
 
 const Page = () => {
   const [data, setData] = useState<RewardData[]>([]);
+  const [dataAmount, setDataAmount] = useState<number[]>([]);
+  const [dataDetails, setDataDetails] = useState<{ name: string; size: string }[][]>([[]]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [totalBalance, setTotalBalance] = useState(0);
+
+  const NUMAMOUNTFIX= 2;
+  const NUMSOLFIX = 3; 
 
   useEffect(() => {
     async function fetchData() {
@@ -33,11 +38,29 @@ const Page = () => {
         }
         const jsonData = await response.json();
         setData(jsonData); // Update your state with the fetched data
+        var totalSOL = 0
+        var dataAmoutArray = []
+        var dataDetails = [[{ name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}]]
+        for (let i = 0; i < jsonData.length; i++) {
+          // EEG: 0.25MB/min
+          // ECG: 0.25MB/min
+          // PPG: 0.10MB/min
+          // Body Temperature: 0.0005MB/min
+          // totalSOL += (0.25 + 0.25 + 0.10 + 0.0005) * jsonData[i].sectonds / 60
+          totalSOL += 0.60005 * jsonData[i].seconds / 60
+          dataAmoutArray.push(totalSOL)
+          const dataDetail = [
+            { name: 'EEG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+            { name: 'ECG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+            { name: 'PPG', size: (jsonData[i].seconds * 0.10 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+            { name: 'Body temperature', size: (jsonData[i].seconds * 0.0005 / 60).toFixed(NUMAMOUNTFIX) + 'MB'},
+          ]
+          dataDetails.push(dataDetail)
+        }
+        setDataAmount(dataAmoutArray)
+        setTotalBalance(totalSOL);
+        setDataDetails(dataDetails);
 
-        // Calculate the total using jsonData directly
-        const total = jsonData.reduce((sum: number, record: RewardData) => sum + parseFloat(record.price.toString()), 0);
-        setTotalBalance(total);
-        console.log(total);
       } catch (error) {
         // Assuming you're using TypeScript and error handling is properly set up
         setError(error instanceof Error ? error.message : String(error));
@@ -89,7 +112,7 @@ const Page = () => {
                       `${Math.floor(record.seconds / 3600)}h ${Math.floor((record.seconds % 3600) / 60)}m`}
                       </span>
                     </summary>
-                    {defaultDataDetails.map((detail, detailIndex) => (
+                    {dataDetails[index+1].map((detail, detailIndex) => (
                       <span key={detailIndex} className="flex justify-between mt-3">
                         <span className="basis-4/6">- {detail.name}</span>
                         <span className="basis-2/6">{detail.size}</span>
@@ -97,7 +120,7 @@ const Page = () => {
                     ))}
                   </details>
                 </span>
-                <span className="basis-2/12 text-right">{record.price.toFixed(5)}SOL</span>
+                <span className="basis-2/12 text-right">{dataAmount[index].toFixed(NUMSOLFIX)}SOL</span>
               </div>
               <hr />
             </React.Fragment>
@@ -108,7 +131,7 @@ const Page = () => {
       <section className="CONTENTS_WRAP mt-20 mx-auto max-w-3xl pb-20">
         <div className="flex justify-between font-bold p-5 bg-slate-400">
           <h3 className="font-bold">Total Rewards Earned</h3>
-          <div className="text-center">{`Balance: ${totalBalance.toFixed(8)} SOL`}</div>
+          <div className="text-center">{`Balance: ${totalBalance.toFixed(NUMSOLFIX)} SOL`}</div>
             {/* <Token records={records} earnSum={earnSum} withdrawSum={withdrawSum} /> */}
         </div>
       </section>
