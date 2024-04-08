@@ -228,11 +228,14 @@ export default function Page() {
       )}
 
 
-      <div className="flex justify-center m-30 pt-10 pb-10 mx-auto max-w-3xl ">
-        <Link  href={{pathname: '/lab/download'}} >
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Your NFT Collections</button>
-        </Link>
-      </div>
+      <section className="pt-10 pb-10 m-30 mx-auto max-w-3xl">
+        <hr/>
+        <div className="flex justify-center pt-10">
+          <Link  href={{pathname: '/lab/download'}} >
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Your NFT Collections</button>
+          </Link>
+        </div>
+      </section>
     </>
   );
 }
