@@ -1,9 +1,18 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Page() {
+interface RewardData {
+  id: string;
+  createdAt: Date;
+  price: number;
+  seconds: number;
+  uid: string;
+}
+
+
+const Page = () => {
     const [showResult, setShowResult] = useState(false);
     const oneweek = new Date(new Date().getTime() - (24 * 60 * 60 * 7000)).toISOString().split('T')[0];
     const [startDate, setStartDate] = useState(oneweek);
@@ -11,6 +20,70 @@ export default function Page() {
     const [days, setDays] = useState(0);
     const [amount, setAmount] = useState(0);
     const [aleart, setAleart] = useState('');
+    const [data, setData] = useState<RewardData[]>([]);
+    const [dataAmount, setDataAmount] = useState<number[]>([]);
+    const [dataDetails, setDataDetails] = useState<{ name: string; size: string }[][]>([[]]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [totalBalance, setTotalBalance] = useState(0);
+    const NUMAMOUNTFIX= 2;
+    const NUMSOLFIX = 3; 
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const response = await fetch('/api/data'); // Make sure this points to your actual API endpoint
+          if (!response.ok) {
+            throw new Error('Data fetching failed');
+          }
+          var jsonData = await response.json();
+          const uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
+            // Create a unique key for each combination of 'seconds' and 'createdAt'
+            const uniqueKey = `${value.seconds}-${value.createdAt}`;
+            return self.findIndex((item: RewardData) => `${item.seconds}-${item.createdAt}` === uniqueKey) === index;
+          });
+          uniqueData.sort((a: RewardData, b: RewardData) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB.getTime() - dateA.getTime();
+          });
+          jsonData = uniqueData;
+          setData(jsonData); 
+          var totalSOL = 0
+          var dataAmoutArray = []
+          var dataDetails = [[{ name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}]]
+          for (let i = 0; i < jsonData.length; i++) {
+            // EEG: 0.25MB/min
+            // ECG: 0.25MB/min
+            // PPG: 0.10MB/min
+            // Body Temperature: 0.0005MB/min
+            // totalSOL += (0.25 + 0.25 + 0.10 + 0.0005) * jsonData[i].sectonds / 60\
+            const amount = 0.60005 * jsonData[i].seconds / 60 /1024
+            totalSOL += amount
+            dataAmoutArray.push(amount)
+            const dataDetail = [
+              { name: 'EEG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+              { name: 'ECG', size: (jsonData[i].seconds * 0.25 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+              { name: 'PPG', size: (jsonData[i].seconds * 0.10 / 60).toFixed(NUMAMOUNTFIX) + 'MB' },
+              { name: 'Body temperature', size: (jsonData[i].seconds * 0.0005 / 60).toFixed(NUMAMOUNTFIX) + 'MB'},
+            ]
+            dataDetails.push(dataDetail)
+          }
+          setDataAmount(dataAmoutArray)
+          setTotalBalance(totalSOL);
+          setDataDetails(dataDetails);
+        } catch (error) {
+          setError(error instanceof Error ? error.message : String(error));
+        } finally {
+          setLoading(false);
+        }
+      }
+  
+      fetchData();
+  
+    }, []);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     const handleSearchClick = () => {
         const result = checkDate(startDate, endDate);
@@ -83,111 +156,141 @@ export default function Page() {
             </span>
             <span className="basis-2/12 text-right">Cost</span>
           </div>
-
           <fieldset>
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
+            {data.map((record, index) => (
+              <React.Fragment key={index}>
+                <div> {/* Add a div as the parent element */}
+                  <hr/>
+                  <label htmlFor={record.id}>
+                    <div className="flex justify-between m-5">
+                      <input type="checkbox" id={record.id} name="data-items" value={record.id}/>
+                      <span className="basis-3/12 pl-3">{new Date(record.createdAt).toLocaleDateString("ja-JP")}</span>
+                      <span className="basis-7/12 flex justify-between">
+                        <details className="w-full">
+                          <summary className="flex justify-between">
+                            <span className="basis-4/6">▼ {dataDetails[index].length} types of data</span>
+                            <span className="basis-2/6">{`${Math.floor(record.seconds / 3600)}h ${Math.floor((record.seconds % 3600) / 60)}m`}</span>
+                          </summary>
+                          {dataDetails[index+1].map((detail, detailIndex) => (
+                            <span key={detailIndex} className="flex justify-between mt-3">
+                              <span className="basis-4/6">- {detail.name}</span>
+                              <span className="basis-2/6">{detail.size}</span>
+                            </span>
+                          ))}
+                        </details>
+                      </span>
+                      <span className="basis-2/12 text-right">{dataAmount[index].toFixed(NUMSOLFIX)} SOL</span>
+                    </div>
+                  </label>
+                </div> {/* Close the div */}
+              </React.Fragment>
+            ))}
           </fieldset>
+
+          {/* <fieldset>
+
+            <hr/>
+            <label htmlFor="{`ITEM-ID`}">
+              <div className="flex justify-between m-5">
+                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
+                <span className="basis-3/12 pl-3">2024-04-01</span>
+                <span className="basis-7/12 flex justify-between">
+                  <details className="w-full">
+                    <summary className="flex justify-between">
+                      <span className="basis-4/6">▼ {`4`} types of data</span>
+                      <span className="basis-2/6">{`20h23m`}</span>
+                    </summary>
+                    <span className="flex justify-between mt-3">
+                      <span className="basis-4/6">- EEG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- ECG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- PPG</span>
+                      <span className="basis-2/6">{`132MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- Body temperature</span>
+                      <span className="basis-2/6">{`0.66MB`}</span>
+                    </span>
+                  </details>
+                </span>
+                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
+              </div>
+            </label>
+
+
+            <hr/>
+            <label htmlFor="{`ITEM-ID`}">
+              <div className="flex justify-between m-5">
+                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
+                <span className="basis-3/12 pl-3">2024-04-01</span>
+                <span className="basis-7/12 flex justify-between">
+                  <details className="w-full">
+                    <summary className="flex justify-between">
+                      <span className="basis-4/6">▼ {`4`} types of data</span>
+                      <span className="basis-2/6">{`20h23m`}</span>
+                    </summary>
+                    <span className="flex justify-between mt-3">
+                      <span className="basis-4/6">- EEG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- ECG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- PPG</span>
+                      <span className="basis-2/6">{`132MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- Body temperature</span>
+                      <span className="basis-2/6">{`0.66MB`}</span>
+                    </span>
+                  </details>
+                </span>
+                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
+              </div>
+            </label>
+
+
+            <hr/>
+            <label htmlFor="{`ITEM-ID`}">
+              <div className="flex justify-between m-5">
+                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
+                <span className="basis-3/12 pl-3">2024-04-01</span>
+                <span className="basis-7/12 flex justify-between">
+                  <details className="w-full">
+                    <summary className="flex justify-between">
+                      <span className="basis-4/6">▼ {`4`} types of data</span>
+                      <span className="basis-2/6">{`20h23m`}</span>
+                    </summary>
+                    <span className="flex justify-between mt-3">
+                      <span className="basis-4/6">- EEG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- ECG</span>
+                      <span className="basis-2/6">{`330MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- PPG</span>
+                      <span className="basis-2/6">{`132MB`}</span>
+                    </span>
+                    <span className="flex justify-between">
+                      <span className="basis-4/6">- Body temperature</span>
+                      <span className="basis-2/6">{`0.66MB`}</span>
+                    </span>
+                  </details>
+                </span>
+                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
+              </div>
+            </label>
+
+          </fieldset> */}
         </div>
       <hr/>
       </section>
@@ -239,3 +342,6 @@ export default function Page() {
     </>
   );
 }
+
+
+export default Page;
