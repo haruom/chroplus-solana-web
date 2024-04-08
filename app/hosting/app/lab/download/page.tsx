@@ -6,8 +6,6 @@ import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
 import { fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
 
 const ENDPOINT = 'https://api.devnet.solana.com';
-const SECRET_KEY = "2fmRSb7SvKfPBC7mpfMpCAAuZx5Ya1BrLkCaK56ENkFoe9GPhxzVSfLaURgW9gsbx24L46uSAfetgjV5nvG1Wzcm"; // LAB
-
 
 interface NFTData {
   publicKey: string; 
@@ -21,10 +19,9 @@ const Page = () => {
 
   const getProvider = () => {
     if ('phantom' in window) {
-      const provider = window.phantom?.solana;
-  
-      if (provider?.isPhantom) {
-        return provider;
+      const phantom = window.phantom as any;
+      if ('solana' in phantom) {
+        return phantom.solana;
       }
     }
   
