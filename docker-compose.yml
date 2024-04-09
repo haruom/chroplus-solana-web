@@ -3,14 +3,22 @@ version: '3'
 services:
   app:
     build: .
-    image: chroplus-solana-web
-    container_name: chroplus-solana-web
+    image: chroplus-solana
+    container_name: chroplus-solana
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./app:/app
     ports:
       - 55100:3000 # Localhost
+      - 50000:50000 # Emulator Suite UI
+      - 50001:50001 # Firebase Hosting
+      - 50002:50002 # Cloud Functions
+      - 50003:50003 # Firebase Firestore
+      - 50004:50004 # Cloud Pub/Sub
+      - 50005:50005 # Realtime Database
+      - 50006:50006 # Auth
+      - 50007:50007 # Storage
     stdin_open: true
     tty: true
     command: /bin/sh
