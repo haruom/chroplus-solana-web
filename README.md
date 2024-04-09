@@ -1,7 +1,7 @@
-# CHRO plus: Decentralized Health Data Marketplace for Longevity Research
+# CHRO+: Community Health Rewards for Optimal Longevity Outcomes
 
 ## Overview
-CHRO plus is a decentralized health data marketplace built on Solana's DePIN (Decentralized Physical Infrastructure Network) principles. Our platform incentivizes users to share their health data, collected via our proprietary XHRO wearable device, in exchange for CHRO token rewards. This data is then aggregated, anonymized, and made available to longevity researchers and health institutions, who can purchase access using Solana's native cryptocurrency, SOL.
+CHRO+ is a decentralized health data marketplace built on Solana's DePIN (Decentralized Physical Infrastructure Network) principles. Our platform incentivizes users to share their health data, collected via our proprietary XHRO wearable device, in exchange for CHRO token rewards. This data is then aggregated, anonymized, and made available to longevity researchers and health institutions, who can purchase access using Solana's native cryptocurrency, SOL.
 
 Our mission is to accelerate breakthroughs in predictive, preventive, and personalized medicine by providing researchers with unprecedented access to diverse, real-world health data, while empowering users to control and benefit from their personal health information.
 
