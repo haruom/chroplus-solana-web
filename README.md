@@ -20,6 +20,9 @@ During the Solana hackathon, our team achieved the following milestones:
 4. Created researcher-facing web app for data discovery and acquisition.
 5. Conducted successful demo of end-to-end data flow from the device to researcher data download.
 
+## Presentation
+Watch our project presentation video on YouTube: [CHRO+ DePIN Presentation](https://youtu.be/63IMGeum9t8)
+
 ## Demonstration
 Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO+ in action!
 
