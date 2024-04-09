@@ -20,19 +20,10 @@ During the Solana hackathon, our team achieved the following milestones:
 4. Created researcher-facing web app for data discovery, acquisition, and analysis.
 5. Conducted successful demo of end-to-end data flow from XHRO device to researcher data download.
 
-## Future Roadmap
-Looking ahead, we plan to:
-- Launch beta platform with 1,000 users and 3 research partners in Q4 2023.
-- Expand to support data from 5+ wearable devices and achieve 100,000 global users by 2024.
-- Implement advanced privacy-preserving computation techniques for even more secure and granular data analysis.
-- Foster a thriving ecosystem of third-party health apps and services built on CHRO plus data and insights.
 
 ## Team
 CHRO plus is led by Founder and CEO Haruo Mizutani, a seasoned entrepreneur in digital health. Our team brings together deep expertise in wearable devices, blockchain technology, data science, and longevity research.
 
-## Get Involved
-We're always looking for passionate collaborators, users, and investors who share our vision of leveraging decentralized technology to drive health innovation and extend healthspan. 
-
-To learn more, contribute, or partner with us, please visit [chroplus.io](https://chroplus.io) or contact us at info@chroplus.io.
-
-Together, we can build a healthier, longer-lived future for all!
+## For Developers
+Please read the below file.
+https://github.com/haruom/chroplus-solana-web/blob/main/getting_started.md
