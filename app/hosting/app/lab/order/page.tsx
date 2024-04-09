@@ -11,8 +11,7 @@ const Page = () => {
     const [amount, setAmount] = useState('');
     const [clickedCopy, setClickedCopy] = useState(false);
     const [csvUrl, setCsvUrl] = useState('');
-    const address = "0x123456789";
-
+    const address = "CQzBVzHWbwkcUQ9Ey251bzPFLocXt27ZvjjTn9UfFMnR";
 
     const clickCopyHandler = async () => {
         try {
