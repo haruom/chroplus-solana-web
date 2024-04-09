@@ -48,7 +48,7 @@ const Page = () => {
             <div className="flex justify-between">
               <h3 className="m-3 font-bold">Quantity</h3>
               <div className="flex m-3">
-                  <span className="mx-3">{`3`}</span>
+                  <span className="mx-3">{`1`}</span>
               </div>
             </div>
             <div className="flex justify-between">
