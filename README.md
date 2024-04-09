@@ -6,11 +6,11 @@ CHRO+ is a decentralized health data marketplace built on Solana's DePIN princip
 Our mission is to accelerate breakthroughs in predictive, preventive, and personalized medicine by providing researchers with unprecedented access to diverse, real-world health data, while empowering users to control and benefit from their personal health information.
 
 ## Key Features
-- **XHRO wearable device:** The world's smallest and most advanced health monitoring wearable, providing comprehensive, real-time health data.
+- **XHRO Wearable device:** The world's smallest and most advanced health monitoring wearable, providing comprehensive, real-time health data.
 - **Secure data tokenization:** User health data is tokenized as NFTs on the Solana blockchain, ensuring data privacy and user control.
-- **CHRO token rewards:** Users earn tokens for sharing their health data, creating incentives for participation and data quality.
+- **Token rewards:** Users earn tokens for sharing their health data, creating incentives for participation and data quality.
 - **Data marketplace:** Researchers and health institutions can discover, purchase, and analyze relevant health datasets using SOL cryptocurrency.
-- **Personalized health insights:** Users receive personalized health insights and recommendations based on their XHRO data and the broader health data ecosystem.
+- **Personalized health insights:** Users receive personalized health insights and recommendations based on their vital data and the broader health data ecosystem.
 
 ## Solana Hackathon Deliverables
 During the Solana hackathon, our team achieved the following milestones:
@@ -18,7 +18,7 @@ During the Solana hackathon, our team achieved the following milestones:
 2. Developed smart contract architecture for token rewards and data access control.
 3. Built user-facing web app for data contribution and token management.
 4. Created researcher-facing web app for data discovery and acquisition.
-5. Conducted successful demo of end-to-end data flow from XHRO device to researcher data download.
+5. Conducted successful demo of end-to-end data flow from the device to researcher data download.
 
 ## Demonstration
 Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO+ in action!
