@@ -44,6 +44,6 @@ To get started with CHRO+ development, please refer to our [Getting Started guid
 ## Get Involved
 We're always looking for passionate collaborators, users, and investors who share our vision of leveraging decentralized technology to drive health innovation and extend healthspan. 
 
-To learn more, contribute, or partner with us, please contact us at info@xhro.org.
+To learn more, contribute, or partner with us, please contact us at info[at]xhro.org.
 
 Together, we can build a healthier, longer-lived future for all!
