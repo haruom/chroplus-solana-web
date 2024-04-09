@@ -23,6 +23,15 @@ During the Solana hackathon, our team achieved the following milestones:
 ## Demonstration
 Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO plus in action!
 
+### Connecting to Solana Devnet using Phantom Wallet
+To fully experience the CHRO+ demonstration, you'll need to connect to the Solana Devnet using the Phantom wallet browser extension. Here's how:
+
+1. Install the Phantom wallet browser extension from the [official website](https://phantom.app/).
+2. Open the Phantom wallet extension and create a new wallet or import an existing one.
+3. Click on the network selector at the bottom of the Phantom wallet interface.
+4. Choose "Devnet" from the list of available networks.
+5. You're now connected to the Solana Devnet and ready to interact with CHRO+.
+
 ## Team
 - **Haruo Mizutani:** Project Leader/Designer
 - **Katsuhito Matsushima:** Full-Stack Engineer
