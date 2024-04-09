@@ -26,8 +26,9 @@ const Page = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [totalBalance, setTotalBalance] = useState(0);
-    const [numCheck, setNumCheck] = useState(0);
+    const [numCheck, setNumCheck] = useState('');
     const [numChkeckDate, setNumCheckDate] = useState(0);
+    const [amountCheck, setAmountCheck] = useState(0);
     const NUMAMOUNTFIX= 2;
     const NUMSOLFIX = 3; 
     useEffect(() => {
@@ -59,7 +60,7 @@ const Page = () => {
             // PPG: 0.10MB/min
             // Body Temperature: 0.0005MB/min
             // totalSOL += (0.25 + 0.25 + 0.10 + 0.0005) * jsonData[i].sectonds / 60\
-            const amount = 0.60005 * jsonData[i].seconds / 60 /1024
+            const amount = 1.2001 * jsonData[i].seconds / 60 /1024
             totalSOL += amount
             dataAmoutArray.push(amount)
             const dataDetail = [
@@ -90,14 +91,20 @@ const Page = () => {
     const handleSearchClick = () => {
       // count how many checkboxes are checked
       const checkedItems = document.querySelectorAll('input[name="data-items"]:checked');
-      setNumCheck(checkedItems.length);
       // show reward data with checked items
       const checkedItemsArray = Array.from(checkedItems);
       const checkedItemsValue = checkedItemsArray.map((item) => item.getAttribute('value'));
       const checkedData = data.filter((record) => checkedItemsValue.includes(record.id));
-      console.log(checkedData);
+      // calculate the total seconds 
+      const totalSeconds = checkedData.reduce((acc, cur) => acc + cur.seconds, 0);
+      // calculate the total amount
+      const totalAmountChecked = 1.2001 * totalSeconds / 60 /1024;
+      console.log(totalAmountChecked);
+      setNumCheck(Number(totalAmountChecked).toFixed(NUMSOLFIX)+"SOL");
+
       const uniqueDatesSet = new Set(checkedData.map(item => item.createdAt));
       const uniqueDatesCount = uniqueDatesSet.size;
+
       setNumCheckDate(uniqueDatesCount);
       setShowResult(true);
     };
