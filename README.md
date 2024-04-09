@@ -15,13 +15,13 @@ Our mission is to accelerate breakthroughs in predictive, preventive, and person
 ## Solana Hackathon Deliverables
 During the Solana hackathon, our team achieved the following milestones:
 1. Integrated XHRO wearable with Solana blockchain for secure data tokenization and transmission.
-2. Developed smart contract architecture for CHRO token rewards and data access control.
+2. Developed smart contract architecture for token rewards and data access control.
 3. Built user-facing web app for data contribution and token management.
 4. Created researcher-facing web app for data discovery and acquisition.
 5. Conducted successful demo of end-to-end data flow from XHRO device to researcher data download.
 
 ## Demonstration
-Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO plus in action!
+Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO+ in action!
 
 ## Connecting to Solana Devnet using Phantom Wallet
 To fully experience the CHRO+ demonstration, you'll need to connect to the Solana Devnet using the Phantom wallet browser extension. Here's how:
