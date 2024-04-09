@@ -6,7 +6,7 @@ CHRO+ is a decentralized health data marketplace built on Solana's DePIN princip
 Our mission is to accelerate breakthroughs in predictive, preventive, and personalized medicine by providing researchers with unprecedented access to diverse, real-world health data, while empowering users to control and benefit from their personal health information.
 
 ## Key Features
-- **XHRO Wearable device:** The world's smallest and most advanced health monitoring wearable, providing comprehensive, real-time health data.
+- **XHRO wearable device:** The world's smallest and most advanced health monitoring wearable, providing comprehensive, real-time health data.
 - **Secure data tokenization:** User health data is tokenized as NFTs on the Solana blockchain, ensuring data privacy and user control.
 - **Token rewards:** Users earn tokens for sharing their health data, creating incentives for participation and data quality.
 - **Data marketplace:** Researchers and health institutions can discover, purchase, and analyze relevant health datasets using SOL cryptocurrency.
