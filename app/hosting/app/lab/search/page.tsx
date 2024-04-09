@@ -26,7 +26,8 @@ const Page = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [totalBalance, setTotalBalance] = useState(0);
-    const [numCheck, setNumCheck] = useState('');
+    const [numCheck, setNumCheck] = useState(0);
+    const [numCheckAmount, setNumCheckAmount] = useState('');
     const [numChkeckDate, setNumCheckDate] = useState(0);
     const [amountCheck, setAmountCheck] = useState(0);
     const NUMAMOUNTFIX= 2;
@@ -38,17 +39,34 @@ const Page = () => {
           if (!response.ok) {
             throw new Error('Data fetching failed');
           }
-          var jsonData = await response.json();
-          const uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
+          let jsonData = await response.json();
+          let uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
             // Create a unique key for each combination of 'seconds' and 'createdAt'
             const uniqueKey = `${value.seconds}-${value.createdAt}`;
             return self.findIndex((item: RewardData) => `${item.seconds}-${item.createdAt}` === uniqueKey) === index;
           });
-          uniqueData.sort((a: RewardData, b: RewardData) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
-            return dateB.getTime() - dateA.getTime();
-          });
+          for(let i = 0; i < uniqueData.length; i++){
+            if(uniqueData[i].createdAt === "Unknown Date"){
+              // drop the data
+              uniqueData.splice(i, 1);
+            }
+          }
+
+          console.log(uniqueData);
+          for(let i = 0; i < uniqueData.length; i++){
+            for(let j = 0; j < uniqueData.length-i-1; j++){
+              if(uniqueData[j].createdAt < uniqueData[j+1].createdAt){
+                let temp = uniqueData[j];
+                uniqueData[j] = uniqueData[j+1];
+                uniqueData[j+1] = temp;
+              }
+            }
+          }
+          console.log(uniqueData);
+
+          for (let i = 0; i < uniqueData.length; i++) {
+            console.log(uniqueData[i].createdAt);
+          }
           jsonData = uniqueData;
           setData(jsonData); 
           var totalSOL = 0
@@ -95,12 +113,15 @@ const Page = () => {
       const checkedItemsArray = Array.from(checkedItems);
       const checkedItemsValue = checkedItemsArray.map((item) => item.getAttribute('value'));
       const checkedData = data.filter((record) => checkedItemsValue.includes(record.id));
+
+      console.log(checkedData);
+      setNumCheck(checkedData.length);
       // calculate the total seconds 
       const totalSeconds = checkedData.reduce((acc, cur) => acc + cur.seconds, 0);
       // calculate the total amount
       const totalAmountChecked = 1.2001 * totalSeconds / 60 /1024;
       console.log(totalAmountChecked);
-      setNumCheck(Number(totalAmountChecked).toFixed(NUMSOLFIX)+"SOL");
+      setNumCheckAmount(Number(totalAmountChecked).toFixed(NUMSOLFIX)+"SOL");
 
       const uniqueDatesSet = new Set(checkedData.map(item => item.createdAt));
       const uniqueDatesCount = uniqueDatesSet.size;
@@ -224,13 +245,13 @@ const Page = () => {
               <tbody>
                 <tr>
                   <td className="border px-4 py-2 text-center">{numChkeckDate}</td>
-                  <td className="border px-4 py-2 text-center">{numCheck}</td>
+                  <td className="border px-4 py-2 text-center">{numCheckAmount}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div className="flex justify-center m-3">
-            <Link  href={{pathname: '/lab/order', query: { startDate:startDate, endDate:endDate, amount:amount}}} >
+            <Link  href={{pathname: '/lab/order', query: { quantity:numCheck}}} >
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pay</button>
             </Link>
           </div>
