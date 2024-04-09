@@ -26,6 +26,8 @@ const Page = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [totalBalance, setTotalBalance] = useState(0);
+    const [numCheck, setNumCheck] = useState(0);
+    const [numChkeckDate, setNumCheckDate] = useState(0);
     const NUMAMOUNTFIX= 2;
     const NUMSOLFIX = 3; 
     useEffect(() => {
@@ -86,15 +88,18 @@ const Page = () => {
     if (error) return <p>Error: {error}</p>;
 
     const handleSearchClick = () => {
-        const result = checkDate(startDate, endDate);
-        if (!result.result) {
-            setAleart(result.message);
-            setShowResult(false);
-        }else{
-            setAleart('');
-            calculateDaysBetweenAndAmount(); 
-            setShowResult(true);
-        }
+      // count how many checkboxes are checked
+      const checkedItems = document.querySelectorAll('input[name="data-items"]:checked');
+      setNumCheck(checkedItems.length);
+      // show reward data with checked items
+      const checkedItemsArray = Array.from(checkedItems);
+      const checkedItemsValue = checkedItemsArray.map((item) => item.getAttribute('value'));
+      const checkedData = data.filter((record) => checkedItemsValue.includes(record.id));
+      console.log(checkedData);
+      const uniqueDatesSet = new Set(checkedData.map(item => item.createdAt));
+      const uniqueDatesCount = uniqueDatesSet.size;
+      setNumCheckDate(uniqueDatesCount);
+      setShowResult(true);
     };
 
     const checkDate = (startDate: string, endDate: string) => {
@@ -186,111 +191,6 @@ const Page = () => {
               </React.Fragment>
             ))}
           </fieldset>
-
-          {/* <fieldset>
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
-
-            <hr/>
-            <label htmlFor="{`ITEM-ID`}">
-              <div className="flex justify-between m-5">
-                <input type="checkbox" id="{`ITEM-ID`}" name="data-items" value="{`ITEM-ID`}"/>
-                <span className="basis-3/12 pl-3">2024-04-01</span>
-                <span className="basis-7/12 flex justify-between">
-                  <details className="w-full">
-                    <summary className="flex justify-between">
-                      <span className="basis-4/6">▼ {`4`} types of data</span>
-                      <span className="basis-2/6">{`20h23m`}</span>
-                    </summary>
-                    <span className="flex justify-between mt-3">
-                      <span className="basis-4/6">- EEG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- ECG</span>
-                      <span className="basis-2/6">{`330MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- PPG</span>
-                      <span className="basis-2/6">{`132MB`}</span>
-                    </span>
-                    <span className="flex justify-between">
-                      <span className="basis-4/6">- Body temperature</span>
-                      <span className="basis-2/6">{`0.66MB`}</span>
-                    </span>
-                  </details>
-                </span>
-                <span className="basis-2/12 text-right">{`0.8`} SOL</span>
-              </div>
-            </label>
-
-          </fieldset> */}
         </div>
       <hr/>
       </section>
@@ -316,8 +216,8 @@ const Page = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="border px-4 py-2 text-center">{days}</td>
-                  <td className="border px-4 py-2 text-center">{amount}</td>
+                  <td className="border px-4 py-2 text-center">{numChkeckDate}</td>
+                  <td className="border px-4 py-2 text-center">{numCheck}</td>
                 </tr>
               </tbody>
             </table>
