@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import Quantity from "./quantity";
 
 const Page = () => {
     const [startDate, setStartDate] = useState('');
@@ -12,6 +12,7 @@ const Page = () => {
     const [clickedCopy, setClickedCopy] = useState(false);
     const [csvUrl, setCsvUrl] = useState('');
     const address = "CQzBVzHWbwkcUQ9Ey251bzPFLocXt27ZvjjTn9UfFMnR";
+
 
     const clickCopyHandler = async () => {
         try {
@@ -48,7 +49,9 @@ const Page = () => {
             <div className="flex justify-between">
               <h3 className="m-3 font-bold">Quantity</h3>
               <div className="flex m-3">
-                  <span className="mx-3">{`1`}</span>
+              <Suspense>
+              <Quantity />
+              </Suspense>
               </div>
             </div>
             <div className="flex justify-between">
