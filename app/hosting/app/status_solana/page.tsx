@@ -36,26 +36,35 @@ const Page = () => {
         if (!response.ok) {
           throw new Error('Data fetching failed');
         }
-        var jsonData = await response.json();
-        const uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
+        let jsonData = await response.json();
+        let uniqueData = jsonData.filter((value: RewardData, index: number, self: RewardData[]) => {
           // Create a unique key for each combination of 'seconds' and 'createdAt'
           const uniqueKey = `${value.seconds}-${value.createdAt}`;
-          // Check if the current index is the first occurrence of this unique key
           return self.findIndex((item: RewardData) => `${item.seconds}-${item.createdAt}` === uniqueKey) === index;
         });
+        for(let i = 0; i < uniqueData.length; i++){
+          if(uniqueData[i].createdAt === "Unknown Date"){
+            // drop the data
+            uniqueData.splice(i, 1);
+          }
+        }
 
-        // Now, sort by 'createdAt' in descending order
-        uniqueData.sort((a: RewardData, b: RewardData) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return dateB.getTime() - dateA.getTime();
-        });
+        console.log(uniqueData);
+        for(let i = 0; i < uniqueData.length; i++){
+          for(let j = 0; j < uniqueData.length-i-1; j++){
+            if(uniqueData[j].createdAt < uniqueData[j+1].createdAt){
+              let temp = uniqueData[j];
+              uniqueData[j] = uniqueData[j+1];
+              uniqueData[j+1] = temp;
+            }
+          }
+        }
+        console.log(uniqueData);
 
-        // Update jsonData or set your state with the filtered and sorted data
+        for (let i = 0; i < uniqueData.length; i++) {
+          console.log(uniqueData[i].createdAt);
+        }
         jsonData = uniqueData;
-
-
-
         setData(jsonData); 
 
 
