@@ -21,7 +21,7 @@ During the Solana hackathon, our team achieved the following milestones:
 5. Conducted successful demo of end-to-end data flow from XHRO device to researcher data download.
 
 ## Demonstration
-Check out our live demonstration website at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO plus in action!
+Check out our demonstration web app at [https://chro-plus.web.app/](https://chro-plus.web.app/) to see CHRO plus in action!
 
 ## Team
 - **Haruo Mizutani:** Project Leader/Designer
