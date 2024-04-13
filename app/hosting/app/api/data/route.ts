@@ -5,10 +5,7 @@ export async function GET(request:Request) {
     const db = admin.firestore();
     try {
         const data: any= [];
-        const snapshot = await admin.firestore()
-        .collection('rewards')
-        .where('createdAt', '>=', new Date('2024-04-01'))
-        .get();
+        const snapshot = await admin.firestore().collection('rewards').get();
         snapshot.forEach((doc) => {
             const docData = doc.data();
             const createdAt = docData.createdAt?._seconds
