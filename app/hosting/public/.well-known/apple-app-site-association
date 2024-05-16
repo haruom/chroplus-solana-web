@@ -1,0 +1,29 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "9VMM83M3Y6.com.chro.plus.develop",
+          "9VMM83M3Y6.com.chro.plus"
+        ],
+        "components": [
+          {
+            "#": "no_universal_links",
+            "exclude": true,
+            "comment": "Matches any URL whose fragment equals no_universal_links and instructs the system not to open it as a universal link"
+          },
+          {
+            "/": "/_app",
+            "comment": "パスが_appの場合はUniversal Links発動する"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "9VMM83M3Y6.com.chro.plus.develop",
+      "9VMM83M3Y6.com.chro.plus"
+    ]
+  }
+}

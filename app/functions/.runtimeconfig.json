@@ -7,6 +7,9 @@
       "wallet": {
         "path": "env/arweaveWalletKey.json"
       }
+    },
+    "worldid": {
+      "salt": "fjoeijlsSJI39jckln1f!2j9!@j3DJv09"
     }
   }
 }

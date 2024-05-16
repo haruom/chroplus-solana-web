@@ -8,3 +8,4 @@ admin.initializeApp({
 exports.api = require("./api/index")
 exports.setThePriceOfDailyXHROData =
   require("./triggers/firestore/setThePriceOfDailyXHROData")
+exports.worldIdLogin = require("./oncall/worldIdLogin")
