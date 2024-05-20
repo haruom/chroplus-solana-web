@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import WorldIDVerification from "./utils/worldIdAuth";
 
 export default function Home() {
   
@@ -45,8 +46,8 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-
-        <Link href="/status_solana" 
+      <WorldIDVerification /> 
+        {/* <Link href="/status_solana" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           rel="noopener noreferrer"
         >
@@ -59,7 +60,7 @@ export default function Home() {
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             login with World Id as user.
           </p>
-        </Link>
+        </Link> */}
 
         <Link href="/lab/search" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
