@@ -1,3 +1,8 @@
+# SetUp 
+1. `nvm use 20`
+2. `cd app`
+3. `firebase emulators:start`
+
 # SetUp(初回のみ)
 
 1. Node.jsのインストール
