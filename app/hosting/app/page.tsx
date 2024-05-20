@@ -31,24 +31,6 @@ export default function Home() {
           DEMO version&nbsp;
           <code className="font-mono font-bold">0.2.3</code>
         </p>
-        {/* <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/QBrane.svg"
-              alt="QBrane Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div> */}
       </div>
 
       <div className="relative flex place-items-center">
@@ -61,10 +43,9 @@ export default function Home() {
           priority
         />
       </div>
+      <div className="flex justify-center items-center h-screen/2">
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-
-        <Link href="/status_solana" 
+        {/* <Link href="/status_solana" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           rel="noopener noreferrer"
         >
@@ -77,7 +58,7 @@ export default function Home() {
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             login as user.
           </p>
-        </Link>
+        </Link> */}
 
         <Link href="/lab/search" 
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -89,9 +70,9 @@ export default function Home() {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          {/* <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             login as lab.
-          </p>
+          </p> */}
         </Link>
       </div>
     </main>
