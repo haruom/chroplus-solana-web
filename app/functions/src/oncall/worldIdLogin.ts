@@ -31,7 +31,7 @@ module.exports = https.onCall(async (data: any, context: CallableContext) => {
   const salt = config().chroplus.worldid.salt;
 
   const hash = createHash("sha256");
-  const hashedId = hash.update(subject + salt).digest("base64");
+  const hashedId = hash.update(subject + salt).digest("base64url");
 
   const token = await admin.auth().createCustomToken(hashedId);
 
