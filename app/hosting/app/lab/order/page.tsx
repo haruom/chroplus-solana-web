@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import Quantity from "./quantity";
+import Amount from "./amount";
 
 const Page = () => {
     const [startDate, setStartDate] = useState('');
@@ -57,7 +58,7 @@ const Page = () => {
             <div className="flex justify-between">
               <h3 className="m-3 font-bold ">Amount of Remittance</h3>
               <div className="flex m-3">
-                <span className="mx-3">{amount}</span>
+                <Amount />
                 <span className="mx-3">SOL</span>
               </div>
             </div>

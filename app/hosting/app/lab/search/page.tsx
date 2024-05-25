@@ -73,6 +73,7 @@ const Page = () => {
           var dataAmoutArray = []
           var dataDetails = [[{ name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}, { name: '', size: ''}]]
           for (let i = 0; i < jsonData.length; i++) {
+            console.log(jsonData[i].seconds);
             // EEG: 0.25MB/min
             // ECG: 0.25MB/min
             // PPG: 0.10MB/min
@@ -251,7 +252,7 @@ const Page = () => {
             </table>
           </div>
           <div className="flex justify-center m-3">
-            <Link  href={{pathname: '/lab/order', query: { quantity:numCheck}}} >
+            <Link  href={{pathname: '/lab/order', query: { quantity:numCheck, amount:numCheckAmount}}} >
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pay</button>
             </Link>
           </div>

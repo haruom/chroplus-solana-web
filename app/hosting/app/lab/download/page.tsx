@@ -25,7 +25,6 @@ const Page = () => {
         return phantom.solana;
       }
     }
-  
     window.open('https://phantom.app/', '_blank');
   };
 
