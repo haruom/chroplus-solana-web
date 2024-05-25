@@ -7,18 +7,24 @@ export async function GET(request:Request) {
         const data: any= [];
         const snapshot = await admin.firestore().collection('rewards').get();
         snapshot.forEach((doc) => {
-            const docData = doc.data();
-            const createdAt = docData.createdAt?._seconds
-              ? new Date(docData.createdAt._seconds * 1000).toLocaleDateString("ja-JP")
-              : "Unknown Date";
-            data.push({
-              id: doc.id,
-              createdAt,
-              price: docData.price,
-              seconds: docData.seconds,
-              uid: docData.uid,
-            });
+          const docData = doc.data();
+          const createdAt = docData.createdAt?._seconds
+            ? new Date(docData.createdAt._seconds * 1000).toLocaleDateString("ja-JP")
+            : "Unknown Date";
+            const seconds = docData.seconds != null && !isNaN(docData.seconds)
+            ? docData.seconds
+            : (docData.measuredTime != null && !isNaN(docData.measuredTime)
+              ? docData.measuredTime
+              : "Unknown");
+          
+          data.push({
+            id: doc.id,
+            createdAt,
+            price: docData.price,
+            seconds: seconds,
+            uid: docData.uid,
           });
+        });
           
         return mkResponse(data,{status:200});
     } catch (error) {
