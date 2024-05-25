@@ -1,26 +1,60 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Suspense } from 'react';
+import { useRouter } from 'next/navigation';
+import { Connection, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import Image from "next/image";
 import Link from "next/link";
 import Quantity from "./quantity";
-import Amount from "./amount";
+import GetAmount from "./amount";
 
 const Page = () => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [amount, setAmount] = useState('');
   const [clickedCopy, setClickedCopy] = useState(false);
-  const [csvUrl, setCsvUrl] = useState('');
+  const router = useRouter();
   const address = "CQzBVzHWbwkcUQ9Ey251bzPFLocXt27ZvjjTn9UfFMnR";
+  const recipientAddress = new PublicKey("CQzBVzHWbwkcUQ9Ey251bzPFLocXt27ZvjjTn9UfFMnR");
+  const connection = new Connection('https://api.devnet.solana.com');
+  const amount = GetAmount(); // GetAmountから取得した金額をSOLとして使用
+  const lamportsAmount = amount * 1000000000; // Convert SOL to lamports
+  console.log('Amount:', amount);
 
-  const clickCopyHandler = async () => {
+  const getProvider = () => {
+    if ('phantom' in window) {
+      const phantom = window.phantom as any;
+      if ('solana' in phantom) {
+        return phantom.solana;
+      }
+    }
+    window.open('https://phantom.app/', '_blank');
+  };
+
+  const sendTransaction = async () => {
     try {
-      await navigator.clipboard.writeText(address);
-      alert('save to clipboard');
-      setClickedCopy(true);
+      const provider = getProvider();
+      const wallet = await provider.connect();
+      const senderPublicKey = new PublicKey(wallet.publicKey.toString());
+      const transaction = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: senderPublicKey,
+          toPubkey: recipientAddress,
+          // lamports: lamportsAmount, // ここで送金額を指定（1 SOL = 1000000000 lamports）
+          lamports: 1000,
+        })
+      );
+
+      transaction.feePayer = senderPublicKey;
+      const { blockhash } = await connection.getRecentBlockhash();
+      transaction.recentBlockhash = blockhash;
+
+      const signed = await provider.signTransaction(transaction);
+      const signature = await connection.sendRawTransaction(signed.serialize());
+      await connection.confirmTransaction(signature);
+
+      alert('Transaction successful!');
+      router.push('/lab/download');
     } catch (error) {
-      alert('failed to save to clipboard');
+      console.error('Error sending transaction:', error);
+      alert('Transaction failed');
     }
   };
 
@@ -58,7 +92,7 @@ const Page = () => {
             <div>
               <h3 className="m-3 font-bold">Amount</h3>
               <div className="m-3 flex items-center">
-                <Amount />
+                <span>{GetAmount()} SOL</span>
               </div>
             </div>
           </div>
@@ -68,9 +102,9 @@ const Page = () => {
               <div className="break-words">{address}</div>
               <button
                 className="btn border border-blue-500 hover:border-blue-700 text-black font-bold py-2 px-4 rounded mt-4"
-                onClick={() => clickCopyHandler()}
+                onClick={() => sendTransaction()}
               >
-                copy
+                Send SOL
               </button>
             </div>
           </div>

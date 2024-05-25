@@ -1,15 +1,16 @@
-'use client'
-import { useSearchParams } from 'next/navigation'
- 
-export default function Amount() {
-  const searchParams = useSearchParams()
- 
-  const search = searchParams.get('amount')
- 
-  // This will not be logged on the server when using static rendering
-  console.log(search)
- 
-  return <>
-  <span className="mx-3">{search}</span>
-  </>
-}
+'use client';
+import { useSearchParams } from 'next/navigation';
+
+const getAmount = () => {
+  const searchParams = useSearchParams();
+  const amountWithUnit = searchParams.get('amount');
+  let amountFloat = 0;
+  if (amountWithUnit) {
+    let amountWithoutUnit = amountWithUnit.replace('SOL', '');
+    let amountFixed = parseFloat(amountWithoutUnit);
+    amountFloat = amountFixed;
+  }
+  return amountFloat;
+};
+
+export default getAmount;
